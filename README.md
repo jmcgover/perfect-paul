@@ -5,9 +5,15 @@ Tools to get DECTalk working for incorporation into a Twitch bot.
 # TODO
 
 - [x] Figure out how to build `say.c` on a modern machine
-- [ ] Write instructions on how to build
+- [x] Write instructions on how to build
 - [ ] Add a compiled `say.exe` to the Releases section
 - [ ] Make the sound output configurable
+
+# Further Reading
+
+- https://github.com/dectalk/dectalk
+- https://github.com/dectalk/list
+- https://github.com/calzoneman/aeiou
 
 # Instructions
 
@@ -28,8 +34,10 @@ Prerequisites:
    - Run `DECtalkMain\Setup.exe`
 1. Copy `'C:\Program Files (x86)\DECtalk\'` to some location in your user directory
    - The next step copies files from this folder, but the Program Files directory requires Administrator privileges
-1. Run `.\setup.bat <copied-DECtalk-path>`
-   - e.g. `.\setup.bat "../DECtalk"`
+1. Run `.\setup.bat <copied-DECtalk-path>` e.g.
+```
+.\setup.bat "../DECtalk"
+```
 1. Open this folder in Visual Studio
 1. In Visual Studio, goto either: 
    - Tools > Command Line > Developer Command Line
@@ -113,10 +121,8 @@ C:.
 
 ```
 
-# Further Reading
+To cleanup:
+```
+.\cleanup.bat
 
-- https://github.com/dectalk/dectalk
-- https://github.com/dectalk/list
-- https://github.com/calzoneman/aeiou
-
-
+```
