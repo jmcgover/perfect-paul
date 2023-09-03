@@ -34,7 +34,7 @@ Prerequisites:
    - Run `DECtalkMain\Setup.exe`
 4. Copy `'C:\Program Files (x86)\DECtalk\'` to some location in your user directory
    - The next step copies files from this folder, but the Program Files directory requires Administrator privileges
-5. Run `.\setup.bat <copied-DECtalk-path>` e.g.
+5. Run `.\setup.bat <copied-DECtalk-path>` to copy relevant build files to this directory, e.g.
 ```
 .\setup.bat "../DECtalk"
 ```
