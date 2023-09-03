@@ -6,9 +6,9 @@
 setlocal
 @set dectalk_install_path=%1
 @echo ========================================
-@mkdir dapi\src\api
 @echo Copying header from your DECTalk install path: '%dectalk_install_path%'
-@copy "%dectalk_install_path%\include\TTSAPI.h" ttsapi.h
+@mkdir dapi\src\api
+@copy "%dectalk_install_path%\include\TTSAPI.h" dapi\src\api\ttsapi.h
 @echo ========================================
 @echo Copying lib files...
 @for %%x in (us uk fr sp gr la) do @(
