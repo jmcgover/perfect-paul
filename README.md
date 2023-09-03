@@ -25,7 +25,7 @@ There are two things this repo is here for:
 ## Building `say.exe`
 
 Prerequisites:
-- [Visual Studio Community](https://visualstudio.microsoft.com/downloads/)
+- [Visual Studio](https://visualstudio.microsoft.com/downloads/) (Community edition should be fine)
   - Likely will need to install the "Desktop development with C++" workload from the Visual Studio Installer
 
 1. Download DECTalk 4.61 via [DECtalkMain.zip](http://theflameofhope.co/dectalkreader1/)
