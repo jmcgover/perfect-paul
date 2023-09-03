@@ -124,3 +124,121 @@ C:.
 ```
 .\cleanup.bat
 ```
+
+# Help Output
+
+```
+SAY  [options] [text]
+
+Help Options:
+
+    -h or -?          = Help.  Outputs this file to the console.  This
+                        option cancels any others on the command line.
+
+    -v                = Version.  Outputs version to the console. This
+                        option cancels any others on the command line.
+
+
+Output Options:
+
+    -w outFile        = Convert text into specified wave file instead of
+                        speaking to the sound device.
+
+    -l[t] outFile     = Turn on text logging, which logs all input text
+                        to a file.  This text includes any pre and post
+                        commands as well as commands sent to DECtalk by
+                        the SAY program itself.
+
+                        Since this is the default logging mode, the 't'
+                        immediately following the '-l' is optional.
+
+    -ls outFile       = Turn on syllable logging, which logs each
+                        syllable to a  file.
+
+    -lp outFile       = Turn on phoneme logging, which converts the
+                        input text to phonemes.  This is useful if you
+                        want to get DECtalk to sing.  You convert the
+                        text to phonemes and then insert the tone
+                        commands into the phoneme file.
+
+    If no output options are specified, SAY sends its output to the
+    installed sound device, ususally a sound card.  Only one output
+    option can be specified; if you specify more than one, the last one
+    on the command line is used.
+
+
+Input Options:
+
+    -pre preText      = Text to be passed to DECtalk before the normal input.
+                        This is useful for passing initializing commands to
+                        DECtalk that would normally not be part of the input.
+                        If the prefix text has spaces, it must be enclosed in
+                        quotes.  An example would be "[:phoneme on]" or
+                        "[:nb :ra200]".
+
+                        The prefix text is "forced" out before the input text
+                        is read.
+
+    -post postText    = Text to be passed to DECtalk after the normal input.
+                        This is useful for passing terminating commands to
+                        DECtalk that would normally not be part of the input.
+                        If the postfix text has spaces, it must be enclosed
+                        in quotes.  An example would be "[:phoneme off]" or
+                        "The End".
+
+                        The "normal" input is "forced" out before the postfix
+                        text is read.
+
+    text              = Text appearing on command line is spoken.  The text
+                        to be spoken can either come from the standard
+                        input or from the command line.
+
+                        Anything on the command line that is not an option
+                        will be interpreted as text, as will anything following
+                        it on the command line.  In other words, text to
+                        be spoken must appear on the command line after
+                        all options.
+
+                        If the *first* word in the text has a dash (-) or
+                        slash (/) as its first character, you must precede
+                        it with another dash or slash.  For example, to tell
+                        DECtalk to say the number -123, you would type the
+                        command
+ 
+                          SAY --123
+
+                        This is necessary to avoid having SAY interpret the
+                        number as a command line option.
+
+                        If you embed DECtalk commands into your text, you must
+                        enclose them in quotes if they contain spaces.
+                        This is because SAY treats each space-delimited
+                        command-line argument as a separate "word",
+                        while DECtalk commands must be processed as
+                        single "words" by the SAY program.
+
+    If no text is specified, SAY will take its input from the standard input.
+    For example, you could have SAY speak a directory listing in Betty's
+    voice by typing
+
+        DIR | SAY -pre "[:nb]"
+
+    or you could just type the command
+
+        SAY
+
+    and then enter text at the console.  In this case, SAY speaks each
+    line after you press RETURN, and exits after you press CTRL-Z.  If
+    you want SAY to take its input from a file, use file redirection as
+    in the following example, which reads the file FOO.TXT in Harry's
+    voice.
+
+        SAY -pre "[:nh]" < FOO.TXT
+
+
+Dictionary Options:
+
+    -d userDict       = Loads the specified user dictionary before
+                        speaking.  This dictionary is loaded in place of
+                        any default user dictionary determined by DECtalk.
+```
