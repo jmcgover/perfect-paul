@@ -6,8 +6,11 @@ Tools to get DECtalk working for incorporation into a Twitch bot.
 
 - [x] Figure out how to build `say.c` on a modern machine
 - [x] Write instructions on how to build
-- [ ] Add a compiled `say.exe` to the Releases section
-- [ ] Make the sound output configurable
+- [x] Add a compiled `say.exe` to the Releases section
+- [x] Make the sound output configurable
+- [ ] Test in the wild with Firebot
+- [ ] Add instructions for Firebot
+- [ ] Change prerelease to release
 
 # Further Reading
 
