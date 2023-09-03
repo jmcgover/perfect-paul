@@ -140,6 +140,15 @@ Help Options:
                         option cancels any others on the command line.
 
 
+Audio Options:
+
+    -a                = List devices and their device number. This
+                        option cancels any others on the command line.
+
+    -a <device-num>   = Use the specified device number for wave output 
+                        Note: It performs no error checking on arg input 
+                        or device number. Choose wisely.
+
 Output Options:
 
     -w outFile        = Convert text into specified wave file instead of
