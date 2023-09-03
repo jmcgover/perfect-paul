@@ -118,7 +118,6 @@ C:.
     └───src
         └───api
                 ttsapi.h
-
 ```
 
 9. Cleanup:
