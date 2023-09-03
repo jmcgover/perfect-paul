@@ -11,6 +11,7 @@ Tools to get DECtalk working for incorporation into a Twitch bot.
 
 # Further Reading
 
+- http://theflameofhope.co/DECTALK.html
 - https://github.com/dectalk/dectalk
 - https://github.com/dectalk/list
 - https://github.com/calzoneman/aeiou
