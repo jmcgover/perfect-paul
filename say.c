@@ -8,6 +8,10 @@
 
 /****************************************************************************/
 
+#define __SAY_VERSION__     "v0.0.1"
+
+/****************************************************************************/
+
 #define INPUT_CMDLINE       0
 #define INPUT_STDIN         1
 
@@ -19,6 +23,7 @@
 
 /****************************************************************************/
 
+void        OutputVersion( void );
 void        OutputHelp( void );
 void        ErrorOut( char *message );
 void        PutStdOut( char *message );
@@ -309,6 +314,13 @@ int ParseArgs( int ac, char **av )
             }
         }
 
+        /* Process request for version */
+
+        else if ( (av[i][1] == 'v') ) {
+            OutputVersion();
+            return -1;
+        }
+        
         /* Process request for help */
 
         else if ( (av[i][1] == 'h') || (av[i][1] == '?') ) {
@@ -411,7 +423,12 @@ BOOL CtrlHandler( DWORD dwCtrlType )
 
     return TRUE;
 }
-
+
+
+void OutputVersion( void )
+{
+    printf("%s", __SAY_VERSION__);
+}
 
 void OutputHelp( void )
 {
@@ -420,6 +437,9 @@ void OutputHelp( void )
     PutStdOut( "Help Options:\n" );
     PutStdOut( "\n" );
     PutStdOut( "    -h or -?          = Help.  Outputs this file to the console.  This\n" );
+    PutStdOut( "                        option cancels any others on the command line.\n" );
+    PutStdOut( "\n" );
+    PutStdOut( "    -v                = Version.  Outputs version to the console. This\n" );
     PutStdOut( "                        option cancels any others on the command line.\n" );
     PutStdOut( "\n" );
     PutStdOut( "\n" );
