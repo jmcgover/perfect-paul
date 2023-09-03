@@ -29,20 +29,20 @@ Prerequisites:
   - Likely will need to install the "Desktop development with C++" workload from the Visual Studio Installer
 
 1. Download DECTalk 4.61 via [DECtalkMain.zip](http://theflameofhope.co/dectalkreader1/)
-1. Unzip DECtalkMain.zip
-1. Install DECtalkMain
+2. Unzip DECtalkMain.zip
+3. Install DECtalkMain
    - Run `DECtalkMain\Setup.exe`
-1. Copy `'C:\Program Files (x86)\DECtalk\'` to some location in your user directory
+4. Copy `'C:\Program Files (x86)\DECtalk\'` to some location in your user directory
    - The next step copies files from this folder, but the Program Files directory requires Administrator privileges
-1. Run `.\setup.bat <copied-DECtalk-path>` e.g.
+5. Run `.\setup.bat <copied-DECtalk-path>` e.g.
 ```
 .\setup.bat "../DECtalk"
 ```
-1. Open this folder in Visual Studio
-1. In Visual Studio, goto either: 
+6. Open this folder in Visual Studio
+7. In Visual Studio, goto either: 
    - Tools > Command Line > Developer Command Line
    - Tools > Command Line > Developer Powershell
-1. Use `nmake` to build `say.exe`:
+8. Use `nmake` to build `say.exe`:
 ```
 nmake.exe /f "say.mak" CFG="say - Win32 Release"
 ```
@@ -121,7 +121,7 @@ C:.
 
 ```
 
-To cleanup:
+9. Cleanup:
 ```
 .\cleanup.bat
 
