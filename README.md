@@ -1,6 +1,6 @@
 # Perfect Paul
 
-Tools to get DECTalk working for incorporation into a Twitch bot.
+Tools to get DECtalk working for incorporation into a Twitch bot.
 
 # TODO
 
