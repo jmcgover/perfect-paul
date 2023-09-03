@@ -6,6 +6,9 @@
 
 #include "ttsapi.h"
 
+#pragma comment(lib, "winmm")
+
+
 /****************************************************************************/
 
 #define __SAY_VERSION__     "v0.0.1"
@@ -23,6 +26,7 @@
 
 /****************************************************************************/
 
+void        OutputAudioInfo( void );
 void        OutputVersion( void );
 void        OutputHelp( void );
 void        ErrorOut( char *message );
@@ -34,17 +38,18 @@ BOOL        CtrlHandler( DWORD dwCtrlType );
 
 /****************************************************************************/
 
-HANDLE      hStdin;                       /* File handle for std. input  */
-HANDLE      hStdout;                      /* File handle for std. output */
-HANDLE      hStderr;                      /* File handle for std. error  */
-int         inputMode = INPUT_STDIN;      /* Where does input come from  */
-int         outputMode = OUTPUT_SOUND;    /* Where does output go to     */
-char        *prefixText = NULL;           /* Text to speak before input  */
-char        *postfixText = NULL;          /* Text to speak after input   */
-char        *outFile = NULL;              /* Name of output file         */
-char        *dictFile = NULL;             /* User dictionary to load     */
-LPTTS_HANDLE_T ttsHandlePtr = NULL;       /* DECtalk TTS handle          */
-BOOL        signalReceived = FALSE;       /* Set TRUE on CTRL/C or Break */
+HANDLE      hStdin;                       /* File handle for std. input   */
+HANDLE      hStdout;                      /* File handle for std. output  */
+HANDLE      hStderr;                      /* File handle for std. error   */
+int         inputMode = INPUT_STDIN;      /* Where does input come from   */
+int         outputMode = OUTPUT_SOUND;    /* Where does output go to      */
+int         audioDevNum = WAVE_MAPPER;    /* Audio device for wave output */
+char        *prefixText = NULL;           /* Text to speak before input   */
+char        *postfixText = NULL;          /* Text to speak after input    */
+char        *outFile = NULL;              /* Name of output file          */
+char        *dictFile = NULL;             /* User dictionary to load      */
+LPTTS_HANDLE_T ttsHandlePtr = NULL;       /* DECtalk TTS handle           */
+BOOL        signalReceived = FALSE;       /* Set TRUE on CTRL/C or Break  */
 
 /****************************************************************************/
 #ifdef BORLAND_C
@@ -78,18 +83,18 @@ int main( int argc, char **argv )
 	*/
 	if ( outputMode == OUTPUT_WAVE ) 
 	{
-		status = TextToSpeechStartup( NULL, &ttsHandlePtr, WAVE_MAPPER, DO_NOT_USE_AUDIO_DEVICE );
+		status = TextToSpeechStartup( NULL, &ttsHandlePtr, audioDevNum, DO_NOT_USE_AUDIO_DEVICE );
 	}
 	else
 	{
-		status = TextToSpeechStartup( NULL, &ttsHandlePtr, WAVE_MAPPER, 0 );
+		status = TextToSpeechStartup( NULL, &ttsHandlePtr, audioDevNum, 0 );
 		if ( status != MMSYSERR_NOERROR ) {
 		/* ETT 11/04/98: BATS #233:
 		if nodriver is returned this means that there is no audio device.
 			try starting TTS again with DO_NOT_USE_AUDIO_DEVICE. */
 			if ( status == MMSYSERR_NODRIVER ) 
 			{
-				status = TextToSpeechStartup( NULL, &ttsHandlePtr, WAVE_MAPPER, DO_NOT_USE_AUDIO_DEVICE );
+				status = TextToSpeechStartup( NULL, &ttsHandlePtr, audioDevNum, DO_NOT_USE_AUDIO_DEVICE );
 				if ( status != MMSYSERR_NOERROR ) {
 					if ( status == MMSYSERR_ERROR ) {
 						ErrorOut( "DECtalk dictionary not found.\n" );
@@ -314,6 +319,20 @@ int ParseArgs( int ac, char **av )
             }
         }
 
+        /* Process request for audio*/
+
+        else if ( (av[i][1] == 'a') ) {
+            if ( i < (ac - 1) ) {
+                i++;
+		char *extraStr;
+                audioDevNum = strtol(/*str=*/av[i], &extraStr, /*base=*/10);
+            } else {
+		OutputAudioInfo();
+		return -1;
+	    }
+        }
+        
+        
         /* Process request for version */
 
         else if ( (av[i][1] == 'v') ) {
@@ -425,6 +444,22 @@ BOOL CtrlHandler( DWORD dwCtrlType )
 }
 
 
+void OutputAudioInfo( void )
+{
+    printf("Listing Audio Devices\n");
+
+    int numDevs = waveOutGetNumDevs();
+    printf("waveOutGetNumDevs(): %d\n", numDevs);
+    printf("#: DEVICE NAME\n");
+    printf("--------------\n");
+    for (int devNum = 0; devNum < numDevs; devNum++) {
+	    MMRESULT mmRes;
+	    WAVEOUTCAPS waveOutCaps; // Struct to be filled in
+	    mmRes = waveOutGetDevCaps(devNum, &waveOutCaps, sizeof(WAVEOUTCAPS));
+	    printf("%d: %s\n", devNum, waveOutCaps.szPname);
+    }
+}
+
 void OutputVersion( void )
 {
     printf("%s", __SAY_VERSION__);
@@ -442,6 +477,15 @@ void OutputHelp( void )
     PutStdOut( "    -v                = Version.  Outputs version to the console. This\n" );
     PutStdOut( "                        option cancels any others on the command line.\n" );
     PutStdOut( "\n" );
+    PutStdOut( "\n" );
+    PutStdOut( "Audio Options:\n" );
+    PutStdOut( "\n" );
+    PutStdOut( "    -a                = List devices and their device number. This\n" );
+    PutStdOut( "                        option cancels any others on the command line.\n" );
+    PutStdOut( "\n" );
+    PutStdOut( "    -a <device-num>   = Use the specified device number for wave output \n" );
+    PutStdOut( "                        Note: It performs no error checking on arg input \n" );
+    PutStdOut( "                        or device number. Choose wisely.\n" );
     PutStdOut( "\n" );
     PutStdOut( "Output Options:\n" );
     PutStdOut( "\n" );
